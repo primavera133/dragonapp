@@ -13,8 +13,7 @@ const fetchData = () => dispatch => {
       dispatch(Creators.fetchDataSuccess(response.data))
     })
     .catch(error => {
-      // console.error('error:', error.response.data)
-      dispatch(Creators.fetchDataFail(error.response.data.message))
+      dispatch(Creators.fetchDataFail(error))
     })
 }
 

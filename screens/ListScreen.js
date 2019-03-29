@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import selectors from '../duck/selectors'
 
-export default class ListScreen extends React.Component {
+class ListScreen extends React.Component {
   constructor (props) {
     super(props)
 
@@ -15,6 +17,9 @@ export default class ListScreen extends React.Component {
       <ScrollView style={styles.container}>
         <View>
           <Text style={styles.headerText}>Species</Text>
+          <Text>{
+            JSON.stringify(this.props.rawData)
+          }</Text>
         </View>
       </ScrollView>
     )
@@ -35,3 +40,15 @@ const styles = StyleSheet.create({
     marginBottom: 12
   }
 })
+
+const mapStateToProps = state => {
+  const rawData = selectors.getRawData(state)
+
+  return {rawData}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListScreen)
