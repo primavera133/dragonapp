@@ -11,6 +11,8 @@ const fetchData = () => dispatch => {
   axios.get(`https://myrenas.se/api-species/json/v1/english/species.json`)
     .then(response => {
       dispatch(Creators.fetchDataSuccess(response.data))
+
+
     })
     .catch(error => {
       dispatch(Creators.fetchDataFail(error))

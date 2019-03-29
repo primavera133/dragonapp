@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { AppLoading, Asset, Font, Icon } from 'expo'
 import { initStore } from './store'
-import AppNavigator from './navigation/AppNavigator'
+import Main from './Main'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -32,7 +32,7 @@ export default class App extends React.Component {
             />
             : <View style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-              <AppNavigator />
+              <Main />
             </View>
         }
       </Provider>
