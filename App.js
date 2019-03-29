@@ -1,6 +1,8 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { AppLoading, Asset, Font, Icon } from 'expo'
+import { initStore } from './store'
 import AppNavigator from './navigation/AppNavigator'
 
 export default class App extends React.Component {
@@ -11,28 +13,30 @@ export default class App extends React.Component {
       isLoadingComplete: false
     }
 
+    this.store = initStore()
+
     this._loadResourcesAsync = this._loadResourcesAsync.bind(this)
     this._handleLoadingError = this._handleLoadingError.bind(this)
     this._handleFinishLoading = this._handleFinishLoading.bind(this)
   }
 
   render () {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      )
-    } else {
-      return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-          <AppNavigator />
-        </View>
-      )
-    }
+    return (
+      <Provider store={this.store}>
+        {
+          (!this.state.isLoadingComplete && !this.props.skipLoadingScreen)
+            ? <AppLoading
+              startAsync={this._loadResourcesAsync}
+              onError={this._handleLoadingError}
+              onFinish={this._handleFinishLoading}
+            />
+            : <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+              <AppNavigator />
+            </View>
+        }
+      </Provider>
+    )
   }
 
   async _loadResourcesAsync () {
