@@ -40,6 +40,7 @@ export default class App extends React.Component {
   }
 
   async _loadResourcesAsync () {
+    console.log('_loadResourcesAsync')
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -62,6 +63,7 @@ export default class App extends React.Component {
   }
 
   _handleFinishLoading () {
+    console.log('_handleFinishLoading')
     this.setState({ isLoadingComplete: true })
   }
 }

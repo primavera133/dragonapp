@@ -1,7 +1,9 @@
 import { createActions } from 'reduxsauce'
 
 const { Creators, Types } = createActions({
-  fetchListDataSuccess: ['value']
+  fetchDataStarted: [],
+  fetchDataSuccess: ['value'],
+  fetchDataFail: []
 })
 
 export { Creators, Types }
