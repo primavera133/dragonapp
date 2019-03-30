@@ -1,11 +1,23 @@
 import React from 'react'
 import { Icon } from 'expo'
 import Colors from '../constants/Colors'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, View } from 'react-native'
 
 export default class ListSpecieItem extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this._handleNavigation = this._handleNavigation.bind(this)
+  }
+
+  _handleNavigation () {
+    const { item, navigation, setSelectedSpecie } = this.props
+    setSelectedSpecie(item)
+    navigation.navigate('Details')
+  }
+
   render () {
-    const {item} = this.props
+    const { item, navigation } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.col0}>
@@ -17,10 +29,18 @@ export default class ListSpecieItem extends React.Component {
           />
         </View>
         <View style={styles.col1}>
-          <Text>{item.scientific_name}</Text>
+          <Button
+            title={item.scientific_name}
+            onPress={this._handleNavigation}
+            accessibilityLabel={`Go to details about ${item.scientific_name}`}
+          />
         </View>
         <View style={styles.col2}>
-          <Text>{item.local_name}</Text>
+          <Button
+            title={item.local_name}
+            onPress={this._handleNavigation}
+            accessibilityLabel={`Go to details about ${item.local_name}`}
+          />
         </View>
       </View>
     )

@@ -5,7 +5,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon'
 import HomeScreen from '../screens/HomeScreen'
 import LinksScreen from '../screens/LinksScreen'
-import ListScreen from '../screens/ListScreen'
+import SpeciesListScreen from '../screens/SpeciesListScreen'
+import SpecieDetailsScreen from '../screens/SpecieDetailsScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 
 const HomeStack = createStackNavigator({
@@ -40,11 +41,12 @@ LinksStack.navigationOptions = {
   )
 }
 
-const ListStack = createStackNavigator({
-  List: ListScreen
-})
+const SpeciesListStack = createStackNavigator({
+  List: SpeciesListScreen,
+  Details: SpecieDetailsScreen
+}, {initialRouteName: 'List'})
 
-ListStack.navigationOptions = {
+SpeciesListStack.navigationOptions = {
   tabBarLabel: 'Species',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -71,6 +73,6 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  ListStack,
+  ListStack: SpeciesListStack,
   SettingsStack
 })

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import dataReducer from './dataReducer'
-import listReducer from './listReducer'
+import speciesReducer from './speciesReducer'
 
 const rootReducer = combineReducers({
   data: dataReducer,
-  list: listReducer
+  species: speciesReducer
 })
 
 export default rootReducer

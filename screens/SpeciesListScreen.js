@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
 import { FlatList } from 'react-native'
 import ListSpecieItem from '../components/ListSpecieItem'
 
-
-class ListScreen extends React.Component {
+class SpeciesListScreen extends React.Component {
   constructor (props) {
     super(props)
 
@@ -18,19 +18,22 @@ class ListScreen extends React.Component {
   _keyExtractor = (item, index) => item.specie_id
 
   render () {
-    const {species} = this.props
+    const { navigation, setSelectedSpecie, species } = this.props
     return (
       <ScrollView style={styles.container}>
-          <Text style={styles.headerText}>Species</Text>
-          <FlatList
-            style={styles.list}
-            keyExtractor={this._keyExtractor}
-            data={species}
-            renderItem={({item}) => <ListSpecieItem item={item}/>}
-            ItemSeparatorComponent={() => (
-              <View style={styles.separator} />
-              )}
-          />
+        <Text style={styles.headerText}>Species</Text>
+        <FlatList
+          style={styles.list}
+          keyExtractor={this._keyExtractor}
+          data={species}
+          renderItem={({ item }) => <ListSpecieItem
+              item={item}
+              navigation={navigation}
+              setSelectedSpecie={setSelectedSpecie}/>}
+          ItemSeparatorComponent={() => (
+            <View style={styles.separator}/>
+          )}
+        />
       </ScrollView>
     )
   }
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
   },
 
   list: {
-    flex:1,
+    flex: 1,
     borderTopColor: '#333',
     borderBottomColor: '#333',
     borderTopWidth: 1,
@@ -67,11 +70,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const species = selectors.getSpecies(state)
 
-  return {species}
+  return { species }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  const setSelectedSpecie = item => dispatch(Creators.setSelectedSpecie(item))
+  return {
+    setSelectedSpecie
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeciesListScreen)
