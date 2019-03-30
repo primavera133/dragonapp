@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { AppLoading, Asset, Font, Icon } from 'expo'
 import { initStore } from './store'
+import { PersistGate } from 'redux-persist/integration/react'
 import Main from './Main'
 
 export default class App extends React.Component {
@@ -13,7 +14,9 @@ export default class App extends React.Component {
       isLoadingComplete: false
     }
 
-    this.store = initStore()
+    const { persistor, store } = initStore()
+    this.store = store
+    this.persistor = persistor
 
     this._loadResourcesAsync = this._loadResourcesAsync.bind(this)
     this._handleLoadingError = this._handleLoadingError.bind(this)
@@ -21,26 +24,24 @@ export default class App extends React.Component {
   }
 
   render () {
-    return (
+    return (!this.state.isLoadingComplete && !this.props.skipLoadingScreen)
+      ? <AppLoading
+        startAsync={this._loadResourcesAsync}
+        onError={this._handleLoadingError}
+        onFinish={this._handleFinishLoading}
+      />
+      :
       <Provider store={this.store}>
-        {
-          (!this.state.isLoadingComplete && !this.props.skipLoadingScreen)
-            ? <AppLoading
-              startAsync={this._loadResourcesAsync}
-              onError={this._handleLoadingError}
-              onFinish={this._handleFinishLoading}
-            />
-            : <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-              <Main />
-            </View>
-        }
+        <PersistGate loading={null} persistor={this.persistor}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle='default'/>}
+            <Main/>
+          </View>
+        </PersistGate>
       </Provider>
-    )
   }
 
   async _loadResourcesAsync () {
-    console.log('_loadResourcesAsync')
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -63,7 +64,6 @@ export default class App extends React.Component {
   }
 
   _handleFinishLoading () {
-    console.log('_handleFinishLoading')
     this.setState({ isLoadingComplete: true })
   }
 }

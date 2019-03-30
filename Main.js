@@ -3,22 +3,11 @@ import { connect } from 'react-redux'
 
 import AppNavigator from './navigation/AppNavigator'
 import operations from './duck/operations'
-import Database from './Database'
-
-const dbConnection = Database.getConnection()
+import selectors from './duck/selectors'
 
 class Main extends Component {
   componentWillMount () {
-    dbConnection.transaction(tx => {
-      tx.executeSql(
-        'create table if not exists species (id integer primary key not null, value text);'
-      )
-    })
-
-    this.props.fetchData()
-  }
-
-  componentDidMount () {
+    this.props.fetchData(this.props.hasRawData)
   }
 
   render () {
@@ -27,12 +16,12 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-  }
+  const hasRawData = !!selectors.getRawData(state)
+  return { hasRawData }
 }
 
 const mapDispatchToProps = dispatch => {
-  const fetchData = () => dispatch(operations.fetchData())
+  const fetchData = (hasRawData) => dispatch(operations.fetchData(hasRawData))
 
   return {
     fetchData

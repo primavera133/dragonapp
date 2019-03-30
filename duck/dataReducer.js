@@ -11,7 +11,7 @@ const _fetchDataFail = (state = INITIAL_STATE, action) => {
   return {
     ...state,
     fetchingData: false,
-    fetchingDataFailed: true
+    fetchingDataFailed: !action.hasRawData // never mind if only update
   }
 }
 
