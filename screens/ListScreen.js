@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import selectors from '../duck/selectors'
+import { FlatList } from 'react-native'
+import ListSpecieItem from '../components/ListSpecieItem'
+
 
 class ListScreen extends React.Component {
   constructor (props) {
@@ -12,15 +15,22 @@ class ListScreen extends React.Component {
     }
   }
 
+  _keyExtractor = (item, index) => item.specie_id
+
   render () {
+    const {species} = this.props
     return (
       <ScrollView style={styles.container}>
-        <View>
           <Text style={styles.headerText}>Species</Text>
-          <Text>{
-            JSON.stringify(this.props.rawData)
-          }</Text>
-        </View>
+          <FlatList
+            style={styles.list}
+            keyExtractor={this._keyExtractor}
+            data={species}
+            renderItem={({item}) => <ListSpecieItem item={item}/>}
+            ItemSeparatorComponent={() => (
+              <View style={styles.separator} />
+              )}
+          />
       </ScrollView>
     )
   }
@@ -34,17 +44,30 @@ const styles = StyleSheet.create({
   },
 
   headerText: {
-    fontSize: 16,
+    fontSize: 20,
     marginLeft: 15,
     marginTop: 9,
     marginBottom: 12
+  },
+
+  list: {
+    flex:1,
+    borderTopColor: '#333',
+    borderBottomColor: '#333',
+    borderTopWidth: 1,
+    borderBottomWidth: 1
+  },
+
+  separator: {
+    height: 1,
+    backgroundColor: '#333'
   }
 })
 
 const mapStateToProps = state => {
-  const rawData = selectors.getRawData(state)
+  const species = selectors.getSpecies(state)
 
-  return {rawData}
+  return {species}
 }
 
 const mapDispatchToProps = dispatch => {
