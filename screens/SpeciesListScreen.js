@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
-import { FlatList } from 'react-native'
+import { SectionList } from 'react-native'
 import ListSpecieItem from '../components/ListSpecieItem'
 
 class SpeciesListScreen extends React.Component {
@@ -18,23 +18,36 @@ class SpeciesListScreen extends React.Component {
   _keyExtractor = (item, index) => item.specie_id
 
   render () {
-    const { navigation, setSelectedSpecie, species } = this.props
+    const { navigation, setSelectedSpecie, families } = this.props
+    console.log('families', families)
+
+    const sections = families.map(family => ({ title: family.family_id, data: family.species}))
+
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>Species</Text>
-        <FlatList
-          style={styles.list}
+      <View style={styles.container}>
+        <SectionList
+          ItemSeparatorComponent={() => <View style={styles.separator}/>}
+
           keyExtractor={this._keyExtractor}
-          data={species}
+
+          ListHeaderComponent={() => <Text style={styles.headerText}>Species</Text>}
+
           renderItem={({ item }) => <ListSpecieItem
               item={item}
               navigation={navigation}
               setSelectedSpecie={setSelectedSpecie}/>}
-          ItemSeparatorComponent={() => (
-            <View style={styles.separator}/>
+
+          renderSectionHeader={({section: {title}}) => (
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionHeaderText}>{title}</Text>
+            </View>
           )}
+
+          sections={sections}
+
+          style={styles.list}
         />
-      </ScrollView>
+      </View>
     )
   }
 }
@@ -55,10 +68,22 @@ const styles = StyleSheet.create({
 
   list: {
     flex: 1,
-    borderTopColor: '#333',
     borderBottomColor: '#333',
-    borderTopWidth: 1,
     borderBottomWidth: 1
+  },
+
+  sectionHeader: {
+    flex: 1,
+    backgroundColor: '#eee',
+    fontSize: 16,
+    paddingLeft: 15,
+    paddingTop: 12,
+    paddingBottom: 9
+  },
+
+  sectionHeaderText: {
+    fontWeight: 'bold',
+    textTransform: 'capitalize'
   },
 
   separator: {
@@ -68,9 +93,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  const species = selectors.getSpecies(state)
+  const families = selectors.getFamilies(state)
 
-  return { species }
+  return { families }
 }
 
 const mapDispatchToProps = dispatch => {

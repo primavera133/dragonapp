@@ -6,6 +6,7 @@ import rootReducer from './duck/reducers'
 
 import { INITIAL_STATE as dataInitialState } from './duck/dataReducer'
 import { INITIAL_STATE as speciesInitialState } from './duck/speciesReducer'
+import { INITIAL_STATE as settingsInitialState } from './duck/settingsReducer'
 
 let store = null
 
@@ -16,7 +17,8 @@ const persistConfig = {
 
 const initialState = {
   data: dataInitialState,
-  species: speciesInitialState
+  species: speciesInitialState,
+  settings: settingsInitialState
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

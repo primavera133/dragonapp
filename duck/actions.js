@@ -4,7 +4,8 @@ const { Creators, Types } = createActions({
   fetchDataStarted: [],
   fetchDataSuccess: ['value'],
   fetchDataFail: ['hasRawData', 'error'],
-  setSelectedSpecie: ['value']
+  setSelectedSpecie: ['value'],
+  setLanguage: ['value']
 })
 
 export { Creators, Types }

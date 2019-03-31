@@ -12,7 +12,7 @@ const fetchData = (hasRawData) => dispatch => {
 
   dispatch(Creators.fetchDataStarted())
 
-  axios.get(`https://myrenas.se/api-species/json/v1/english/species.json`)
+  axios.get(`https://myrenas.se/api-species/json/v1.json`)
     .then(response => {
       dispatch(Creators.fetchDataSuccess(response.data))
     })
