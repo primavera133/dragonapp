@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import selectors from '../duck/selectors'
-import { FlatList } from 'react-native'
-import ListSpecieItem from '../components/ListSpecieItem'
-
+import Markdown from 'react-native-markdown-renderer'
 
 class SpecieDetailsScreen extends React.Component {
   constructor (props) {
@@ -19,10 +17,17 @@ class SpecieDetailsScreen extends React.Component {
     const {specie} = this.props
     return (
       <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>Specie details</Text>
-        <View>
+        <View style={styles.localName}>
+          <Text style={styles.localNameText}>{specie.local_name}</Text>
+        </View>
+        <View style={styles.sciName}>
           <Text>{specie.scientific_name}</Text>
-          <Text>{specie.local_name}</Text>
+        </View>
+        <View style={styles.descriptionBlock}>
+          <Text style={styles.descriptionHeader}>Description</Text>
+        </View>
+        <View style={styles.descriptionBlock}>
+          <Markdown>{ specie.description }</Markdown>
         </View>
       </ScrollView>
     )
@@ -36,12 +41,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
 
-  headerText: {
-    fontSize: 20,
+  localName: {
+    marginLeft: 15,
+    marginTop: 9
+  },
+
+  localNameText: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+
+  sciName: {
     marginLeft: 15,
     marginTop: 9,
-    marginBottom: 12
+    fontSize: 12
+  },
+
+  descriptionBlock: {
+    marginLeft: 15,
+    marginTop: 9
+  },
+
+  descriptionHeader: {
+    fontWeight: 'bold'
   }
+
 })
 
 const mapStateToProps = state => {

@@ -12,9 +12,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/splash.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,9 +24,6 @@
       "supportsTablet": true
     },
     "description": "European dragonflies",
-    "githubUrl": "https://github.com/primavera133/dragonapp.git",
-    "splash": {
-      "image": "./assets/images/splash.png"
-    }
+    "githubUrl": "https://github.com/primavera133/dragonapp.git"
   }
 }
