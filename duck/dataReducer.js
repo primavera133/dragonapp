@@ -1,7 +1,7 @@
 import { createReducer } from 'reduxsauce'
 import { Types } from './actions'
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   raw: null,
   fetchingData: false,
   fetchingDataFailed: false,

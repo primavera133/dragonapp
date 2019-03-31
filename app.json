@@ -24,6 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "European dragonflies",
+    "githubUrl": "https://github.com/primavera133/dragonapp.git"
   }
 }

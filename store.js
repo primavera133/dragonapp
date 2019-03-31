@@ -4,6 +4,9 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from './duck/reducers'
 
+import { INITIAL_STATE as dataInitialState } from './duck/dataReducer'
+import { INITIAL_STATE as speciesInitialState } from './duck/speciesReducer'
+
 let store = null
 
 const persistConfig = {
@@ -11,18 +14,34 @@ const persistConfig = {
   storage
 }
 
+const initialState = {
+  data: dataInitialState,
+  species: speciesInitialState
+}
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const initStore = () => {
+  const enhancers = []
+  const middlewares = [thunkMiddleware]
+  if (__DEV__) {
+    const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__
+
+    if (typeof devToolsExtension === 'function') {
+      enhancers.push(devToolsExtension())
+    }
+  }
+
   const composedEnhancers = compose(
-    applyMiddleware(thunkMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    // other store enhancers if any
+    applyMiddleware(...middlewares),
+    ...enhancers
   )
 
   if (!store) {
+    console.log('!store')
     store = createStore(
       persistedReducer,
+      initialState,
       composedEnhancers
     )
   }
