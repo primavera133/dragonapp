@@ -14,7 +14,7 @@ class SpecieDetailsScreen extends React.Component {
   }
 
   render () {
-    const {specie} = this.props
+    const { specie } = this.props
     return (
       <ScrollView style={styles.container}>
         <View style={styles.localName}>
@@ -71,11 +71,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const specie = selectors.getSpecie(state)
 
-  return {specie}
+  return { specie }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {}
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpecieDetailsScreen)

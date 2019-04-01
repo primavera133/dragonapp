@@ -7,7 +7,7 @@ import selectors from './duck/selectors'
 
 class Main extends Component {
   componentWillMount () {
-    const {hasRawData} = this.props
+    const { hasRawData } = this.props
     this.props.fetchData(hasRawData)
   }
 
@@ -23,12 +23,8 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  const fetchData = (hasRawData) => dispatch(operations.fetchData(hasRawData))
-
-  return {
-    fetchData
-  }
+const mapDispatchToProps = {
+  fetchData: (hasRawData) => operations.fetchData(hasRawData)
 }
 
 export default connect(

@@ -19,7 +19,6 @@ class SpeciesListScreen extends React.Component {
 
   render () {
     const { navigation, setSelectedSpecie, families } = this.props
-    console.log('families', families)
 
     const sections = families.map(family => ({ title: family.family_id, data: family.species}))
 
@@ -98,11 +97,8 @@ const mapStateToProps = state => {
   return { families }
 }
 
-const mapDispatchToProps = dispatch => {
-  const setSelectedSpecie = item => dispatch(Creators.setSelectedSpecie(item))
-  return {
-    setSelectedSpecie
-  }
+const mapDispatchToProps = {
+  setSelectedSpecie: item => Creators.setSelectedSpecie(item)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpeciesListScreen)

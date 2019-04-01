@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 31166,
   "expoServerNgrokUrl": "https://dk-7ak.jonasmyrenas.dragonapp.exp.direct",
   "packagerNgrokUrl": "https://packager.dk-7ak.jonasmyrenas.dragonapp.exp.direct",
-  "ngrokPid": 35730,
+  "ngrokPid": 31198,
   "webpackServerPort": null
 }
