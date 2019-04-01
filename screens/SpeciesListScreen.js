@@ -5,6 +5,7 @@ import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
 import { SectionList } from 'react-native'
 import ListSpecieItem from '../components/ListSpecieItem'
+import i18n from 'i18n-js';
 
 class SpeciesListScreen extends React.Component {
   constructor (props) {
@@ -20,6 +21,8 @@ class SpeciesListScreen extends React.Component {
   }
 
   render () {
+    const { language } = this.props // enforce re-render when changing language
+    console.log(language, i18n.t('species.h1'))
     const { navigation, setSelectedSpecie, families } = this.props
 
     return (
@@ -29,7 +32,7 @@ class SpeciesListScreen extends React.Component {
 
           keyExtractor={this._keyExtractor}
 
-          ListHeaderComponent={() => <Text style={styles.headerText}>Species</Text>}
+          ListHeaderComponent={() => <Text style={styles.headerText}>{i18n.t('species.h1')}</Text>}
 
           renderItem={({ item }) => <ListSpecieItem
               item={item}
@@ -93,8 +96,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   const families = selectors.getFamilies(state)
+  const language = selectors.getLanguage(state)
 
-  return { families }
+  return {
+    families,
+    language
+  }
 }
 
 const mapDispatchToProps = {

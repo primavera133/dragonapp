@@ -12,14 +12,14 @@ import { INITIAL_STATE as linksInitialState } from './duck/linksReducer'
 let store = null
 
 const persistConfig = {
-  key: 'v1',
+  key: 'v3',
   storage,
   migrate: (state) => {
     return Promise.resolve({
       ...state,
       settings: {
         ...state.settings,
-        language: 'en_GB'
+        language: 'sv_SE'
       }
     })
   }

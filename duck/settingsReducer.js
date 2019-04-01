@@ -3,8 +3,8 @@ import { Types } from './actions'
 // import { Types } from './actions'
 
 export const INITIAL_STATE = {
-  language: 'en_GB',
-  languages: ['en_GB']
+  language: 'sv_SE',
+  languages: ['sv_SE']
 }
 
 const _setLanguage = (state = INITIAL_STATE, action) => {

@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import selectors from '../duck/selectors'
 import { connect } from 'react-redux'
+import i18n from 'i18n-js';
 
 class SettingsScreen extends React.Component {
   constructor (props) {
@@ -13,21 +14,21 @@ class SettingsScreen extends React.Component {
   }
 
   render () {
-    const { language } = this.props
+    const { language } = this.props // enforce re-render when changing language
 
     return (
       <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>Settings</Text>
+        <Text style={styles.headerText}>{i18n.t('settings.h1')}</Text>
 
         <View style={styles.block}>
           <View style={styles.blockStart}>
-            <Text style={styles.blockHeader} >Language: { language }</Text>
+            <Text style={styles.blockHeader} >{i18n.t('settings.h2')}: { language }</Text>
           </View>
           <View style={styles.blockEnd}>
             <Text
               style={styles.blockChange}
               onPress={() => this.props.navigation.navigate('Languages')}
-            >Change</Text>
+            >{i18n.t('settings.change')}</Text>
           </View>
         </View>
       </ScrollView>

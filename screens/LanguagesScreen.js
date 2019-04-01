@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Picker, StyleSheet, Text, View } from 'react-native'
 import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
+import i18n from 'i18n-js';
 
 class LanguagesScreen extends React.Component {
   constructor (props) {
@@ -17,6 +18,7 @@ class LanguagesScreen extends React.Component {
 
   _handleOnChange (itemValue, itemIndex) {
     this.props.setLanguage(itemValue)
+    i18n.locale = itemValue
   }
 
   render () {
@@ -24,9 +26,9 @@ class LanguagesScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.headerText}>Settings</Text>
+        <Text style={styles.headerText}>{i18n.t('settings.changeLanguages.h1')}</Text>
 
-        <Text style={styles.subHeaderText} >Change language</Text>
+        <Text style={styles.subHeaderText} >{i18n.t('settings.changeLanguages.h2')}</Text>
 
         <View style={styles.block}>
           <Picker
@@ -67,7 +69,6 @@ const styles = StyleSheet.create({
     marginTop: 9,
     marginBottom: 12
   }
-
 })
 
 const mapStateToProps = state => {
@@ -81,7 +82,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  setLanguage: (language) => Creators.setLanguage(language)
+  setLanguage: (language) => (Creators.setLanguage(language))
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LanguagesScreen)

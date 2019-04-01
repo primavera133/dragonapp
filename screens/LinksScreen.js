@@ -4,6 +4,7 @@ import { WebBrowser } from 'expo'
 import selectors from '../duck/selectors'
 import { Creators } from '../duck/actions'
 import { connect } from 'react-redux'
+import i18n from 'i18n-js'
 
 class LinksScreen extends React.Component {
   constructor (props) {
@@ -19,10 +20,11 @@ class LinksScreen extends React.Component {
   };
 
   render () {
+    const { language } = this.props // enforce re-render when changing language
     const { links } = this.props
     return (
       <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>Links</Text>
+        <Text style={styles.headerText}>{i18n.t('links.h1')}!</Text>
 
         {links.map(link => (
           <View key={link.group_id}>
@@ -57,9 +59,13 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
+  const language = selectors.getLanguage(state)
   const links = selectors.getLinks(state)
 
-  return { links }
+  return {
+    language,
+    links
+  }
 }
 
 const mapDispatchToProps = {

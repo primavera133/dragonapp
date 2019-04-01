@@ -5,7 +5,7 @@ import { Creators } from './actions'
  * Get data
  * @returns {Function}
  */
-const fetchData = (hasRawData, language = 'en_GB') => dispatch => {
+const fetchData = (hasRawData, language) => dispatch => {
   if (hasRawData) {
     console.log('rehydrated ok, fetching updates')
   }
