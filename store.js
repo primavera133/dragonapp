@@ -7,18 +7,20 @@ import rootReducer from './duck/reducers'
 import { INITIAL_STATE as dataInitialState } from './duck/dataReducer'
 import { INITIAL_STATE as speciesInitialState } from './duck/speciesReducer'
 import { INITIAL_STATE as settingsInitialState } from './duck/settingsReducer'
+import { INITIAL_STATE as linksInitialState } from './duck/linksReducer'
 
 let store = null
 
 const persistConfig = {
-  key: 'root',
+  key: 'v1',
   storage
 }
 
 const initialState = {
   data: dataInitialState,
   species: speciesInitialState,
-  settings: settingsInitialState
+  settings: settingsInitialState,
+  links: linksInitialState
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -40,7 +42,6 @@ export const initStore = () => {
   )
 
   if (!store) {
-    console.log('!store')
     store = createStore(
       persistedReducer,
       initialState,

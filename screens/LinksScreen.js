@@ -1,8 +1,11 @@
 import React from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
-import { ExpoLinksView } from '@expo/samples'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { WebBrowser } from 'expo'
+import selectors from '../duck/selectors'
+import { Creators } from '../duck/actions'
+import { connect } from 'react-redux'
 
-export default class LinksScreen extends React.Component {
+class LinksScreen extends React.Component {
   constructor (props) {
     super(props)
 
@@ -11,12 +14,21 @@ export default class LinksScreen extends React.Component {
     }
   }
 
+  static _handleLink (lnk) {
+    WebBrowser.openBrowserAsync(lnk)
+  };
+
   render () {
+    const { links } = this.props
     return (
       <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-        <ExpoLinksView />
+        <Text style={styles.headerText}>Links</Text>
+
+        {links.map(link => (
+          <View key={link.group_id}>
+            <Text onPress={() => LinksScreen._handleLink(link.url)} style={styles.linkText}>{link.text}</Text>
+          </View>
+        ))}
       </ScrollView>
     )
   }
@@ -27,5 +39,31 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff'
+  },
+
+  headerText: {
+    fontSize: 20,
+    marginLeft: 15,
+    marginTop: 9,
+    marginBottom: 12
+  },
+
+  linkText: {
+    fontSize: 16,
+    marginLeft: 15,
+    marginTop: 9,
+    marginBottom: 12
   }
 })
+
+const mapStateToProps = state => {
+  const links = selectors.getLinks(state)
+
+  return { links }
+}
+
+const mapDispatchToProps = {
+  setSelectedSpecie: item => Creators.setSelectedSpecie(item)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LinksScreen)

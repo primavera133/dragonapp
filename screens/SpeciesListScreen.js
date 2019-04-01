@@ -15,12 +15,12 @@ class SpeciesListScreen extends React.Component {
     }
   }
 
-  _keyExtractor = (item, index) => item.specie_id
+  _keyExtractor = item => {
+    return item.items_id
+  }
 
   render () {
     const { navigation, setSelectedSpecie, families } = this.props
-
-    const sections = families.map(family => ({ title: family.family_id, data: family.species}))
 
     return (
       <View style={styles.container}>
@@ -42,7 +42,7 @@ class SpeciesListScreen extends React.Component {
             </View>
           )}
 
-          sections={sections}
+          sections={families}
 
           style={styles.list}
         />

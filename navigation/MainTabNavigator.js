@@ -72,7 +72,7 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
+  SpeciesListStack,
   LinksStack,
-  ListStack: SpeciesListStack,
   SettingsStack
 })
