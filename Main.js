@@ -7,8 +7,8 @@ import selectors from './duck/selectors'
 
 class Main extends Component {
   componentWillMount () {
-    const { hasRawData, lang } = this.props
-    this.props.fetchData(hasRawData, lang)
+    const { hasRawData, language } = this.props
+    this.props.fetchData(hasRawData, language)
   }
 
   render () {
@@ -18,10 +18,10 @@ class Main extends Component {
 
 const mapStateToProps = state => {
   const hasRawData = !!selectors.getRawData(state)
-  const lang = selectors.getLanguage(state)
+  const language = selectors.getLanguage(state)
   return {
     hasRawData,
-    lang
+    language
   }
 }
 

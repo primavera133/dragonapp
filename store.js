@@ -13,7 +13,16 @@ let store = null
 
 const persistConfig = {
   key: 'v1',
-  storage
+  storage,
+  migrate: (state) => {
+    return Promise.resolve({
+      ...state,
+      settings: {
+        ...state.settings,
+        language: 'en_GB'
+      }
+    })
+  }
 }
 
 const initialState = {

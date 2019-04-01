@@ -4,6 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon'
 import HomeScreen from '../screens/HomeScreen'
+import LanguagesScreen from '../screens/LanguagesScreen'
 import LinksScreen from '../screens/LinksScreen'
 import SpeciesListScreen from '../screens/SpeciesListScreen'
 import SpecieDetailsScreen from '../screens/SpecieDetailsScreen'
@@ -44,7 +45,7 @@ LinksStack.navigationOptions = {
 const SpeciesListStack = createStackNavigator({
   List: SpeciesListScreen,
   Details: SpecieDetailsScreen
-}, {initialRouteName: 'List'})
+}, { initialRouteName: 'List' })
 
 SpeciesListStack.navigationOptions = {
   tabBarLabel: 'Species',
@@ -57,7 +58,8 @@ SpeciesListStack.navigationOptions = {
 }
 
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
+  Settings: SettingsScreen,
+  Languages: LanguagesScreen
 })
 
 SettingsStack.navigationOptions = {

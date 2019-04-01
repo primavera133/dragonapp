@@ -3,18 +3,27 @@ import { Types } from './actions'
 // import { Types } from './actions'
 
 export const INITIAL_STATE = {
-  lang: 'en'
+  language: 'en_GB',
+  languages: ['en_GB']
 }
 
 const _setLanguage = (state = INITIAL_STATE, action) => {
   return {
     ...state,
-    lang: action.value
+    language: action.value
+  }
+}
+
+const _setLanguages = (state = INITIAL_STATE, action) => {
+  return {
+    ...state,
+    languages: action.value
   }
 }
 
 const HANDLERS = {
-  [Types.SET_LANGUAGE]: _setLanguage
+  [Types.SET_LANGUAGE]: _setLanguage,
+  [Types.SET_LANGUAGES]: _setLanguages
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)

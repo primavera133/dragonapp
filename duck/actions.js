@@ -3,11 +3,12 @@ import { createActions } from 'reduxsauce'
 const { Creators, Types } = createActions({
   fetchDataStarted: [],
   fetchDataSuccess: ['value'],
-  fetchDataSuccessFamilies: ['value'],
-  fetchDataSuccessLinks: ['value'],
   fetchDataFail: ['hasRawData', 'error'],
-  setSelectedSpecie: ['value'],
-  setLanguage: ['value']
+  setFamilies: ['value'],
+  setLanguage: ['value'],
+  setLanguages: ['value'],
+  setLinks: ['value'],
+  setSelectedSpecie: ['value']
 })
 
 export { Creators, Types }

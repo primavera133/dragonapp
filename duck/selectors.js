@@ -15,11 +15,13 @@ const getLinks = state => getLinksData(state).links
 
 // Settings
 const getSettings = state => state.settings
-const getLanguage = state => getSettings(state).lang
+const getLanguage = state => getSettings(state).language
+const getLanguages = state => getSettings(state).languages
 
 export default {
   getData,
   getLanguage,
+  getLanguages,
   getRawData,
   getFamilies,
   getLinks,

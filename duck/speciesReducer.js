@@ -13,7 +13,7 @@ const _setSelectedSpecie = (state = INITIAL_STATE, action) => {
   }
 }
 
-const _fetchDataSuccessFamilies = (state = INITIAL_STATE, action) => {
+const _setFamilies = (state = INITIAL_STATE, action) => {
   return {
     ...state,
     families: action.value
@@ -21,7 +21,7 @@ const _fetchDataSuccessFamilies = (state = INITIAL_STATE, action) => {
 }
 
 const HANDLERS = {
-  [Types.FETCH_DATA_SUCCESS_FAMILIES]: _fetchDataSuccessFamilies,
+  [Types.SET_FAMILIES]: _setFamilies,
   [Types.SET_SELECTED_SPECIE]: _setSelectedSpecie
 }
 
