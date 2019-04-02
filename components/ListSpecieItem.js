@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from 'expo'
 import Colors from '../constants/Colors'
-import { Button, Platform, StyleSheet, Text, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export default class ListSpecieItem extends React.Component {
   constructor (props) {
@@ -19,30 +19,23 @@ export default class ListSpecieItem extends React.Component {
   render () {
     const { item, navigation } = this.props
     return (
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={this._handleNavigation}
+        >
         <View style={styles.col0}>
           <Icon.Ionicons
-            name={Platform.OS === 'ios' ? 'ios-star' : 'md-star'}
+            name={Platform.OS === 'ios' ? 'ios-image' : 'md-image'}
             size={26}
             style={{ marginBottom: -3 }}
             color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
           />
         </View>
         <View style={styles.col1}>
-          <Button
-            title={item.scientific_name}
-            onPress={this._handleNavigation}
-            accessibilityLabel={`Go to details about ${item.scientific_name}`}
-          />
+          <Text style={styles.loc}>{item.local_name}</Text>
+          <Text style={styles.sci}>{item.scientific_name}</Text>
         </View>
-        <View style={styles.col2}>
-          <Button
-            title={item.local_name}
-            onPress={this._handleNavigation}
-            accessibilityLabel={`Go to details about ${item.local_name}`}
-          />
-        </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
@@ -62,16 +55,18 @@ const styles = StyleSheet.create({
   },
 
   col1: {
-    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
     justifyContent: 'center',
-    width: 50,
     height: 50
   },
 
-  col2: {
-    flex: 1,
-    justifyContent: 'center',
-    width: 50,
-    height: 50
-  }
+  loc: {
+    fontSize: 20
+  },
+
+  sci: {
+    fontSize: 14
+  },
+
 })
