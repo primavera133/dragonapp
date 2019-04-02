@@ -15,7 +15,7 @@ class Main extends Component {
     i18n.translations = {
       en_GB: {
         links: {
-          h1: 'Links!'
+          h1: 'Links'
         },
         settings: {
           h1: 'Settings',
