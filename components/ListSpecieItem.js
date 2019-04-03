@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from 'expo'
 import Colors from '../constants/Colors'
-import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export default class ListSpecieItem extends React.Component {
   constructor (props) {
@@ -17,12 +17,12 @@ export default class ListSpecieItem extends React.Component {
   }
 
   render () {
-    const { item, navigation } = this.props
+    const { item } = this.props
     return (
       <TouchableOpacity
         style={styles.container}
         onPress={this._handleNavigation}
-        >
+      >
         <View style={styles.col0}>
           <Icon.Ionicons
             name={Platform.OS === 'ios' ? 'ios-image' : 'md-image'}
@@ -44,7 +44,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    paddingTop: 6,
+    paddingBottom: 6
   },
 
   col0: {
@@ -57,8 +59,7 @@ const styles = StyleSheet.create({
   col1: {
     flexWrap: 'wrap',
     flexDirection: 'column',
-    justifyContent: 'center',
-    height: 50
+    justifyContent: 'center'
   },
 
   loc: {
@@ -67,6 +68,6 @@ const styles = StyleSheet.create({
 
   sci: {
     fontSize: 14
-  },
+  }
 
 })
