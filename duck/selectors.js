@@ -1,5 +1,6 @@
 // API Data
 const getData = state => state.data
+const getAllImagesFlat = state => getData(state).allImagesFlat
 const getRawData = state => getData(state).raw
 const isFetchingData = state => getData(state).fetchingData && !getData(state).fetchingDataFailed
 const isFetchDataFailed = state => getData(state).fetchingDataFailed
@@ -19,6 +20,7 @@ const getLanguage = state => getSettings(state).language
 const getLanguages = state => getSettings(state).languages
 
 export default {
+  getAllImagesFlat,
   getData,
   getLanguage,
   getLanguages,

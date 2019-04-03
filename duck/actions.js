@@ -8,7 +8,8 @@ const { Creators, Types } = createActions({
   setLanguage: ['value'],
   setLanguages: ['value'],
   setLinks: ['value'],
-  setSelectedSpecie: ['value']
+  setSelectedSpecie: ['value'],
+  setAllImagesFlat: ['value']
 })
 
 export { Creators, Types }

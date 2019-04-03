@@ -23,6 +23,7 @@ const fetchData = (hasRawData) => dispatch => {
 
       const families = {}
       const links = {}
+      let allImagesFlat = []
       languages.forEach(language => {
         const result = results.find(result => result.language_id === language)
         const departments = result.departments
@@ -31,9 +32,25 @@ const fetchData = (hasRawData) => dispatch => {
           .groups
           .map(family => ({ title: family.group_id, data: family.items }))
 
+        allImagesFlat = allImagesFlat.concat(families[language].map(family => {
+          return family.data.map(specie => {
+            let _images = []
+            if (specie.images && specie.images.thumb) {
+              _images.push(specie.images.thumb)
+            }
+            if (specie.images && specie.images.images) {
+              _images = _images.concat(specie.images.images)
+            }
+            return _images
+          }).reduce((acc, curr) => acc.concat(curr))
+        }).reduce((acc, curr) => acc.concat(curr)))
+
         links[language] = departments.find(department => department.department_id === 'links')
           .groups
       })
+
+      dispatch(Creators.setAllImagesFlat(allImagesFlat))
+
       dispatch(Creators.setFamilies(families))
       dispatch(Creators.setLinks(links))
     })

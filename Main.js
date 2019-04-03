@@ -5,64 +5,51 @@ import AppNavigator from './navigation/AppNavigator'
 import operations from './duck/operations'
 import selectors from './duck/selectors'
 import i18n from 'i18n-js'
+import translations from './data/translations'
+import { CacheManager } from 'react-native-expo-image-cache'
 
 class Main extends Component {
+  constructor (props) {
+    super(props)
+
+    this._prefetch(props.images)
+
+    this._prefetch = this._prefetch.bind(this)
+  }
+
   componentWillMount () {
     const { hasRawData } = this.props
     this.props.fetchData(hasRawData)
 
     i18n.fallbacks = true
-    i18n.translations = {
-      en_GB: {
-        links: {
-          h1: 'Links'
-        },
-        settings: {
-          h1: 'Settings',
-          h2: 'Language:',
-          change: 'change',
-          changeLanguages: {
-            h1: 'Settings',
-            h2: 'Change language'
-          }
-        },
-        species: {
-          h1: 'Dragonflies of Europe'
-        }
-      },
-      sv_SE: {
-        links: {
-          h1: 'Länkar!'
-        },
-        settings: {
-          h1: 'Inställningar',
-          h2: 'Språk:',
-          change: 'ändra',
-          changeLanguages: {
-            h1: 'Inställningar',
-            h2: 'Ändra språk'
-          }
-        },
-        species: {
-          h1: 'Europas trollsländor'
-        }
-      }
-    }
+    i18n.translations = translations
     i18n.locale = this.props.language
-    console.log('this.props.language', this.props.language)
+  }
+
+  _prefetch (images) {
+    images.forEach(uri => {
+      CacheManager.get(uri).getPath()
+      /*
+      .then(() => {
+        console.log(666)
+      })
+*/
+    })
   }
 
   render () {
-    return <AppNavigator />
+    return (<AppNavigator />)
   }
 }
 
 const mapStateToProps = state => {
   const language = selectors.getLanguage(state)
   const hasRawData = !!selectors.getRawData(state)
+  const images = selectors.getAllImagesFlat(state)
   return {
     hasRawData,
-    language
+    language,
+    images
   }
 }
 
