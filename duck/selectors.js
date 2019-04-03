@@ -7,11 +7,11 @@ const isFetchDataFailed = state => getData(state).fetchingDataFailed
 // Species
 const getSpeciesData = state => state.species
 const getSpecie = state => getSpeciesData(state).selectedSpecie
-const getFamilies = state => getSpeciesData(state).families
+const getFamilies = (state, language) => getSpeciesData(state).families[language]
 
 // Links
 const getLinksData = state => state.links
-const getLinks = state => getLinksData(state).links
+const getLinks = (state, language) => getLinksData(state).links[language]
 
 // Settings
 const getSettings = state => state.settings

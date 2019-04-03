@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SectionList, StyleSheet, Text, View } from 'react-native'
 import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
-import { SectionList } from 'react-native'
 import ListSpecieItem from '../components/ListSpecieItem'
-import i18n from 'i18n-js';
+import i18n from 'i18n-js'
 
 class SpeciesListScreen extends React.Component {
   constructor (props) {
@@ -14,32 +13,33 @@ class SpeciesListScreen extends React.Component {
     this.navigationOptions = {
       title: 'List'
     }
+
+    this._keyExtractor = this._keyExtractor.bind(this)
   }
 
-  _keyExtractor = item => {
+  _keyExtractor (item) {
     return item.items_id
   }
 
   render () {
     const { language } = this.props // enforce re-render when changing language
-    console.log(language, i18n.t('species.h1'))
     const { navigation, setSelectedSpecie, families } = this.props
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} data-lang={language}>
         <SectionList
-          ItemSeparatorComponent={() => <View style={styles.separator}/>}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
 
           keyExtractor={this._keyExtractor}
 
           ListHeaderComponent={() => <Text style={styles.headerText}>{i18n.t('species.h1')}</Text>}
 
           renderItem={({ item }) => <ListSpecieItem
-              item={item}
-              navigation={navigation}
-              setSelectedSpecie={setSelectedSpecie}/>}
+            item={item}
+            navigation={navigation}
+            setSelectedSpecie={setSelectedSpecie} />}
 
-          renderSectionHeader={({section: {title}}) => (
+          renderSectionHeader={({ section: { title } }) => (
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionHeaderText}>{title}</Text>
             </View>
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  const families = selectors.getFamilies(state)
   const language = selectors.getLanguage(state)
+  const families = selectors.getFamilies(state, language)
 
   return {
     families,

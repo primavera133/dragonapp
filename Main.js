@@ -8,8 +8,8 @@ import i18n from 'i18n-js'
 
 class Main extends Component {
   componentWillMount () {
-    const { hasRawData, language } = this.props
-    this.props.fetchData(hasRawData, language)
+    const { hasRawData } = this.props
+    this.props.fetchData(hasRawData)
 
     i18n.fallbacks = true
     i18n.translations = {
@@ -49,8 +49,8 @@ class Main extends Component {
       }
     }
     i18n.locale = this.props.language
+    console.log('this.props.language', this.props.language)
   }
-
 
   render () {
     return <AppNavigator />
@@ -58,8 +58,8 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  const hasRawData = !!selectors.getRawData(state)
   const language = selectors.getLanguage(state)
+  const hasRawData = !!selectors.getRawData(state)
   return {
     hasRawData,
     language
@@ -67,7 +67,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  fetchData: (hasRawData, lang) => operations.fetchData(hasRawData, lang)
+  fetchData: (hasRawData) => operations.fetchData(hasRawData)
 }
 
 export default connect(

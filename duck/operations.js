@@ -5,9 +5,9 @@ import { Creators } from './actions'
  * Get data
  * @returns {Function}
  */
-const fetchData = (hasRawData, language) => dispatch => {
+const fetchData = (hasRawData) => dispatch => {
   if (hasRawData) {
-    console.log('rehydrated ok, fetching updates')
+    console.log('fetching updates')
   }
 
   dispatch(Creators.fetchDataStarted())
@@ -19,20 +19,23 @@ const fetchData = (hasRawData, language) => dispatch => {
       const results = response.data.results
 
       const languages = results.map(result => result.language_id)
+      dispatch(Creators.setLanguages(languages))
 
-      const result = results.find(result => result.language_id === language)
-      const departments = result.departments
-      const families = departments
-        .find(department => department.department_id === 'families')
-        .groups
-        .map(family => ({ title: family.group_id, data: family.items }))
+      const families = {}
+      const links = {}
+      languages.forEach(language => {
+        const result = results.find(result => result.language_id === language)
+        const departments = result.departments
+        families[language] = departments
+          .find(department => department.department_id === 'families')
+          .groups
+          .map(family => ({ title: family.group_id, data: family.items }))
 
-      const links = departments.find(department => department.department_id === 'links')
-        .groups
-
+        links[language] = departments.find(department => department.department_id === 'links')
+          .groups
+      })
       dispatch(Creators.setFamilies(families))
       dispatch(Creators.setLinks(links))
-      dispatch(Creators.setLanguages(languages))
     })
     .catch(error => {
       console.log('error', error)

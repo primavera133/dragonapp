@@ -6,7 +6,6 @@ import { Creators } from '../duck/actions'
 import { connect } from 'react-redux'
 import i18n from 'i18n-js'
 import LinkIcon from '../components/LinkIcon'
-import TabBarIcon from '../navigation/MainTabNavigator'
 
 class LinksScreen extends React.Component {
   constructor (props) {
@@ -25,14 +24,14 @@ class LinksScreen extends React.Component {
     const { language } = this.props // enforce re-render when changing language
     const { links } = this.props
     return (
-      <View style={styles.container}>
+      <View style={styles.container} data-lang={language}>
         <Text style={styles.headerText}>{i18n.t('links.h1')}</Text>
 
         <FlatList
           style={styles.linkBlock}
           data={links}
           keyExtractor={(item) => item.group_id}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
               <View style={styles.link}>
                 <Text
@@ -43,7 +42,8 @@ class LinksScreen extends React.Component {
                   name={Platform.OS === 'ios' ? 'ios-open' : 'md-open'}
                 />
               </View>
-            )}
+            )
+          }
           }
         />
       </View>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   const language = selectors.getLanguage(state)
-  const links = selectors.getLinks(state)
+  const links = selectors.getLinks(state, language)
 
   return {
     language,

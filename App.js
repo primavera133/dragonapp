@@ -30,12 +30,11 @@ export default class App extends React.Component {
         onError={this._handleLoadingError}
         onFinish={this._handleFinishLoading}
       />
-      :
-      <Provider store={this.store}>
+      : <Provider store={this.store}>
         <PersistGate loading={null} persistor={this.persistor}>
           <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle='default'/>}
-            <Main/>
+            {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+            <Main />
           </View>
         </PersistGate>
       </Provider>

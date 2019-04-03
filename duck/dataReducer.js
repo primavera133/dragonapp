@@ -4,7 +4,7 @@ import { Types } from './actions'
 export const INITIAL_STATE = {
   raw: null,
   fetchingData: false,
-  fetchingDataFailed: false,
+  fetchingDataFailed: false
 }
 
 const _fetchDataFail = (state = INITIAL_STATE, action) => {
@@ -15,7 +15,7 @@ const _fetchDataFail = (state = INITIAL_STATE, action) => {
   }
 }
 
-const _fetchDataStarted = (state = INITIAL_STATE, action) => {
+const _fetchDataStarted = (state = INITIAL_STATE) => {
   return {
     ...state,
     fetchingData: true
@@ -34,7 +34,7 @@ const _fetchDataSuccess = (state = INITIAL_STATE, action) => {
 const HANDLERS = {
   [Types.FETCH_DATA_FAIL]: _fetchDataFail,
   [Types.FETCH_DATA_STARTED]: _fetchDataStarted,
-  [Types.FETCH_DATA_SUCCESS]: _fetchDataSuccess,
+  [Types.FETCH_DATA_SUCCESS]: _fetchDataSuccess
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)
