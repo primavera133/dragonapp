@@ -1,8 +1,7 @@
 import React from 'react'
 import { Icon } from 'expo'
 import Colors from '../constants/Colors'
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Image } from 'react-native-expo-image-cache'
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export default class ListSpecieItem extends React.Component {
   constructor (props) {
@@ -19,12 +18,7 @@ export default class ListSpecieItem extends React.Component {
 
   render () {
     const { item } = this.props
-    const preview = { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==' }
     const uri = item.images && item.images.thumb ? item.images.thumb.uri : null
-    const thumb = {
-      preview,
-      uri
-    }
 
     return (
       <TouchableOpacity
@@ -33,7 +27,7 @@ export default class ListSpecieItem extends React.Component {
       >
         <View style={styles.col0}>
           {uri ? (
-            <Image style={styles.thumb} {...thumb} />
+            <Image style={styles.thumb} source={{ uri }} />
           ) : (
             <Icon.Ionicons
               name={Platform.OS === 'ios' ? 'ios-image' : 'md-image'}
