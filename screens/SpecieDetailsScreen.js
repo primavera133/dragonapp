@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import selectors from '../duck/selectors'
 import Markdown from 'react-native-markdown-renderer'
+import Photo from '../components/Photo'
 
 class SpecieDetailsScreen extends React.Component {
   constructor (props) {
@@ -15,6 +16,8 @@ class SpecieDetailsScreen extends React.Component {
 
   render () {
     const { specie } = this.props
+    const images = specie.images ? specie.images.images : []
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.localName}>
@@ -27,8 +30,12 @@ class SpecieDetailsScreen extends React.Component {
           <Text style={styles.descriptionHeader}>Description</Text>
         </View>
         <View style={styles.descriptionBlock}>
-          <Markdown>{ specie.description }</Markdown>
+          <Markdown>{specie.description}</Markdown>
         </View>
+        {images.map((image, idx) => <Photo
+          key={`photo_${idx}`}
+          image={image}
+        />)}
       </ScrollView>
     )
   }

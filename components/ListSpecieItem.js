@@ -20,10 +20,10 @@ export default class ListSpecieItem extends React.Component {
   render () {
     const { item } = this.props
     const preview = { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==' }
-    const imageUri = item.images && item.images.thumb ? item.images.thumb : null
+    const uri = item.images && item.images.thumb ? item.images.thumb.uri : null
     const thumb = {
       preview,
-      uri: imageUri
+      uri
     }
 
     return (
@@ -32,13 +32,13 @@ export default class ListSpecieItem extends React.Component {
         onPress={this._handleNavigation}
       >
         <View style={styles.col0}>
-          {imageUri ? (
+          {uri ? (
             <Image style={styles.thumb} {...thumb} />
           ) : (
             <Icon.Ionicons
               name={Platform.OS === 'ios' ? 'ios-image' : 'md-image'}
-              size={26}
-              style={{ marginBottom: -3 }}
+              size={36}
+              style={styles.thumbPlaceholder}
               color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
             />
           )}
@@ -72,6 +72,10 @@ const styles = StyleSheet.create({
   thumb: {
     width: 50,
     height: 50
+  },
+
+  thumbPlaceholder: {
+    marginBottom: -3
   },
 
   col1: {

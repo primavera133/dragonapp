@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import { Image } from 'react-native'
 import AppNavigator from './navigation/AppNavigator'
 import operations from './duck/operations'
 import selectors from './duck/selectors'
 import i18n from 'i18n-js'
 import translations from './data/translations'
-import { CacheManager } from 'react-native-expo-image-cache'
 
 class Main extends Component {
   constructor (props) {
@@ -27,13 +26,10 @@ class Main extends Component {
   }
 
   _prefetch (images) {
-    images.forEach(uri => {
-      CacheManager.get(uri).getPath()
-      /*
-      .then(() => {
-        console.log(666)
-      })
-*/
+    // console.log('_prefetch images', images)
+    images.forEach(({ uri }) => {
+      // console.log('_prefetch uri', uri, uri.lastIndexOf())
+      Image.prefetch(uri)
     })
   }
 
