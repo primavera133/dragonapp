@@ -20,9 +20,17 @@ const _setFamilies = (state = INITIAL_STATE, action) => {
   }
 }
 
+const _setStructure = (state = INITIAL_STATE, action) => {
+  return {
+    ...state,
+    structure: action.value
+  }
+}
+
 const HANDLERS = {
   [Types.SET_FAMILIES]: _setFamilies,
-  [Types.SET_SELECTED_SPECIE]: _setSelectedSpecie
+  [Types.SET_SELECTED_SPECIE]: _setSelectedSpecie,
+  [Types.SET_STRUCTURE]: _setStructure
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)

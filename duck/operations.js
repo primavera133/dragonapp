@@ -21,16 +21,26 @@ const fetchData = (hasRawData) => dispatch => {
       const languages = results.map(result => result.language_id)
       dispatch(Creators.setLanguages(languages))
 
+      const structure = {}
       const families = {}
       const links = {}
       let allImagesFlat = []
+
       languages.forEach(language => {
         const result = results.find(result => result.language_id === language)
         const departments = result.departments
-        families[language] = departments
+
+        structure[language] = departments
+          .find(department => department.department_id === 'structure')
+          .groups[0]
+        structure[language].order = Array.prototype.concat(...structure[language].order)
+
+        const _families = departments
           .find(department => department.department_id === 'families')
           .groups
           .map(family => ({ title: family.group_id, data: family.items }))
+
+        families[language] = structure[language].order.map(key => _families.find(family => family.title === key))
 
         allImagesFlat = allImagesFlat.concat(families[language].map(family => {
           return family.data.map(specie => {
@@ -53,6 +63,7 @@ const fetchData = (hasRawData) => dispatch => {
 
       dispatch(Creators.setFamilies(families))
       dispatch(Creators.setLinks(links))
+      dispatch(Creators.setStructure(structure))
     })
     .catch(error => {
       console.log('error', error)
