@@ -2,8 +2,10 @@
 const getData = state => state.data
 const getAllImagesFlat = state => getData(state).allImagesFlat
 const getRawData = state => getData(state).raw
-const isFetchingData = state => getData(state).fetchingData && !getData(state).fetchingDataFailed
+const isFetchingData = state => getData(state).fetchingData
 const isFetchDataFailed = state => getData(state).fetchingDataFailed
+const isPrefetching = state => getData(state).prefetching
+const isLoading = state => isFetchingData(state) || isPrefetching(state)
 
 // Species
 const getSpeciesData = state => state.species
@@ -29,5 +31,6 @@ export default {
   getLinks,
   getSpecie,
   isFetchingData,
-  isFetchDataFailed
+  isFetchDataFailed,
+  isLoading
 }

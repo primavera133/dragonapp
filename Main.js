@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Image } from 'react-native'
+import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import AppNavigator from './navigation/AppNavigator'
 import operations from './duck/operations'
 import selectors from './duck/selectors'
@@ -8,49 +8,56 @@ import i18n from 'i18n-js'
 import translations from './data/translations'
 
 class Main extends Component {
-  constructor (props) {
-    super(props)
-
-    this._prefetch(props.images)
-
-    this._prefetch = this._prefetch.bind(this)
-  }
-
   componentWillMount () {
-    const { hasRawData } = this.props
-    this.props.fetchData(hasRawData)
+    this.props.startUp()
 
     i18n.fallbacks = true
     i18n.translations = translations
     i18n.locale = this.props.language
   }
 
-  _prefetch (images) {
-    // console.log('_prefetch images', images)
-    images.forEach(({ uri }) => {
-      // console.log('_prefetch uri', uri, uri.lastIndexOf())
-      Image.prefetch(uri)
-    })
-  }
-
   render () {
-    return (<AppNavigator />)
+    const { isLoading } = this.props
+    return (isLoading)
+      ? (
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+          <AppNavigator />
+        </View>
+      )
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  },
+  loadingText: {
+    textAlign: 'center'
+  }
+})
+
 const mapStateToProps = state => {
   const language = selectors.getLanguage(state)
-  const hasRawData = !!selectors.getRawData(state)
-  const images = selectors.getAllImagesFlat(state)
+  const isLoading = selectors.isLoading(state)
   return {
-    hasRawData,
-    language,
-    images
+    isLoading,
+    language
   }
 }
 
 const mapDispatchToProps = {
-  fetchData: (hasRawData) => operations.fetchData(hasRawData)
+  startUp: () => operations.startUp()
 }
 
 export default connect(

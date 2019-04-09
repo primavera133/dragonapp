@@ -3,7 +3,10 @@ import { createActions } from 'reduxsauce'
 const { Creators, Types } = createActions({
   fetchDataStarted: [],
   fetchDataSuccess: ['value'],
-  fetchDataFail: ['hasRawData', 'error'],
+  fetchDataFail: ['error'],
+  prefetchStart: ['value'],
+  prefetchSuccess: [],
+  prefetchFail: ['value'],
   setFamilies: ['value'],
   setLanguage: ['value'],
   setLanguages: ['value'],
