@@ -11,6 +11,7 @@ const { Creators, Types } = createActions({
   setLanguage: ['value'],
   setLanguages: ['value'],
   setLinks: ['value'],
+  setSelectedImage: ['value'],
   setSelectedSpecie: ['value'],
   setAllImagesFlat: ['value'],
   setStructure: ['value']

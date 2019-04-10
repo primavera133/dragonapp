@@ -4,7 +4,7 @@ import selectors from '../duck/selectors'
 import { connect } from 'react-redux'
 import i18n from 'i18n-js';
 
-class SettingsScreen extends React.Component {
+class SettingsScreen extends React.PureComponent {
   constructor (props) {
     super(props)
 

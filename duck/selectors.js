@@ -9,7 +9,8 @@ const isLoading = state => isFetchingData(state) || isPrefetching(state)
 
 // Species
 const getSpeciesData = state => state.species
-const getSpecie = state => getSpeciesData(state).selectedSpecie
+const getSelectedImage = state => getSpeciesData(state).selectedImage
+const getSelectedSpecie = state => getSpeciesData(state).selectedSpecie
 const getFamilies = (state, language) => getSpeciesData(state).families[language]
 
 // Links
@@ -29,7 +30,8 @@ export default {
   getRawData,
   getFamilies,
   getLinks,
-  getSpecie,
+  getSelectedImage,
+  getSelectedSpecie,
   isFetchingData,
   isFetchDataFailed,
   isLoading

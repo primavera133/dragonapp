@@ -8,6 +8,7 @@ import LanguagesScreen from '../screens/LanguagesScreen'
 import LinksScreen from '../screens/LinksScreen'
 import SpeciesListScreen from '../screens/SpeciesListScreen'
 import SpecieDetailsScreen from '../screens/SpecieDetailsScreen'
+import ImageScreen from '../screens/ImageScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 
 const HomeStack = createStackNavigator({
@@ -44,7 +45,8 @@ LinksStack.navigationOptions = {
 
 const SpeciesListStack = createStackNavigator({
   List: SpeciesListScreen,
-  Details: SpecieDetailsScreen
+  Details: SpecieDetailsScreen,
+  Image: ImageScreen
 }, { initialRouteName: 'List' })
 
 SpeciesListStack.navigationOptions = {

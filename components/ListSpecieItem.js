@@ -3,7 +3,7 @@ import { Icon } from 'expo'
 import Colors from '../constants/Colors'
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-export default class ListSpecieItem extends React.Component {
+export default class ListSpecieItem extends React.PureComponent {
   constructor (props) {
     super(props)
 
@@ -11,9 +11,8 @@ export default class ListSpecieItem extends React.Component {
   }
 
   _handleNavigation () {
-    const { item, navigation, setSelectedSpecie } = this.props
-    setSelectedSpecie(item)
-    navigation.navigate('Details')
+    const { item, navigate } = this.props
+    navigate(item)
   }
 
   render () {

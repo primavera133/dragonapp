@@ -1,17 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
 import Markdown from 'react-native-markdown-renderer'
 import Photo from '../components/Photo'
 
-class SpecieDetailsScreen extends React.Component {
+class SpecieDetailsScreen extends React.PureComponent {
   constructor (props) {
     super(props)
 
     this.navigationOptions = {
       title: 'Details'
     }
+
+    this._handleSelectImage = this._handleSelectImage.bind(this)
+  }
+
+  _handleSelectImage (image) {
+    const { navigation } = this.props
+    this.props.selectImage(image)
+    navigation.navigate('Image')
   }
 
   render () {
@@ -32,10 +41,14 @@ class SpecieDetailsScreen extends React.Component {
         <View style={styles.descriptionBlock}>
           <Markdown>{specie.description}</Markdown>
         </View>
-        {images.map((image, idx) => <Photo
-          key={`photo_${idx}`}
-          image={image}
-        />)}
+        {images.map((image, idx) =>
+          <Photo
+            key={`photo_${idx}`}
+            onSelect={this._handleSelectImage}
+            preview
+            image={image}
+          />
+        )}
       </ScrollView>
     )
   }
@@ -76,11 +89,13 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  const specie = selectors.getSpecie(state)
+  const specie = selectors.getSelectedSpecie(state)
 
   return { specie }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  selectImage: (img) => Creators.setSelectedImage(img)
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpecieDetailsScreen)

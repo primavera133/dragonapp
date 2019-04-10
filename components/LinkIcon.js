@@ -3,7 +3,7 @@ import { Icon } from 'expo'
 
 import Colors from '../constants/Colors'
 
-export default class LinkIcon extends React.Component {
+export default class LinkIcon extends React.PureComponent {
   render () {
     return (
       <Icon.Ionicons

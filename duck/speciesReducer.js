@@ -2,8 +2,16 @@ import { createReducer } from 'reduxsauce'
 import { Types } from './actions'
 
 export const INITIAL_STATE = {
+  selectedImage: null,
   selectedSpecie: null,
   families: null
+}
+
+const _setSelectedImage = (state = INITIAL_STATE, action) => {
+  return {
+    ...state,
+    selectedImage: action.value
+  }
 }
 
 const _setSelectedSpecie = (state = INITIAL_STATE, action) => {
@@ -29,6 +37,7 @@ const _setStructure = (state = INITIAL_STATE, action) => {
 
 const HANDLERS = {
   [Types.SET_FAMILIES]: _setFamilies,
+  [Types.SET_SELECTED_IMAGE]: _setSelectedImage,
   [Types.SET_SELECTED_SPECIE]: _setSelectedSpecie,
   [Types.SET_STRUCTURE]: _setStructure
 }

@@ -14,29 +14,35 @@ class SpeciesListScreen extends React.Component {
       title: 'List'
     }
 
-    this._keyExtractor = this._keyExtractor.bind(this)
+    this._handleNavigateToDetails = this._handleNavigateToDetails.bind(this)
   }
 
-  _keyExtractor (item) {
+  static _keyExtractor (item) {
     return item.items_id
+  }
+
+  _handleNavigateToDetails (item) {
+    const { navigation, setSelectedSpecie } = this.props
+    setSelectedSpecie(item)
+    navigation.navigate('Details')
   }
 
   render () {
     const { language } = this.props // enforce re-render when changing language
-    const { navigation, setSelectedSpecie, families } = this.props
+    const { setSelectedSpecie, families } = this.props
 
     return (
       <View style={styles.container} data-lang={language}>
         <SectionList
           ItemSeparatorComponent={() => <View style={styles.separator} />}
 
-          keyExtractor={this._keyExtractor}
+          keyExtractor={SpeciesListScreen._keyExtractor}
 
           ListHeaderComponent={() => <Text style={styles.headerText}>{i18n.t('species.h1')}</Text>}
 
           renderItem={({ item }) => <ListSpecieItem
             item={item}
-            navigation={navigation}
+            navigate={this._handleNavigateToDetails}
             setSelectedSpecie={setSelectedSpecie} />}
 
           renderSectionHeader={({ section: { title } }) => (
@@ -86,12 +92,8 @@ const styles = StyleSheet.create({
   sectionHeaderText: {
     fontWeight: 'bold',
     textTransform: 'capitalize'
-  },
-
-  separator: {
-    height: 1,
-    backgroundColor: '#333'
   }
+
 })
 
 const mapStateToProps = state => {
