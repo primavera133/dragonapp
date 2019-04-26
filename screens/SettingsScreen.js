@@ -1,36 +1,51 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import selectors from '../duck/selectors'
 import { connect } from 'react-redux'
-import i18n from 'i18n-js';
+import i18n from 'i18n-js'
 
 class SettingsScreen extends React.PureComponent {
   constructor (props) {
     super(props)
 
     this.navigationOptions = {
-      title: 'app.json'
+      title: 'Settings'
     }
   }
 
   render () {
-    const { language } = this.props // enforce re-render when changing language
+    const { language, selectedFilterArea, selectedFilterLevel } = this.props // enforce re-render when changing language
+
+    let selectedFilter = selectedFilterArea
+    if (selectedFilterLevel === 'EXTENDED') {
+      selectedFilter += '_EXTENDED'
+    }
 
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.headerText}>{i18n.t('settings.h1')}</Text>
 
-        <View style={styles.block}>
+        <TouchableOpacity style={styles.block} onPress={() => this.props.navigation.navigate('Languages')}>
           <View style={styles.blockStart}>
-            <Text style={styles.blockHeader} >{i18n.t('settings.h2')}: { language }</Text>
+            <Text style={styles.blockHeader} >{i18n.t('settings.h2_language')} { language }</Text>
           </View>
           <View style={styles.blockEnd}>
             <Text
               style={styles.blockChange}
-              onPress={() => this.props.navigation.navigate('Languages')}
             >{i18n.t('settings.change')}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.block} onPress={() => this.props.navigation.navigate('Filter')}>
+          <View style={styles.blockStart}>
+            <Text style={styles.blockHeader} >{i18n.t('settings.h2_filter')} {i18n.t(`settings.changeFilter.areas.${selectedFilter}`)}</Text>
+          </View>
+          <View style={styles.blockEnd}>
+            <Text
+              style={styles.blockChange}
+            >{i18n.t('settings.change')}</Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     )
   }
@@ -86,8 +101,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   const language = selectors.getLanguage(state)
+  const selectedFilterArea = selectors.getFilterArea(state)
+  const selectedFilterLevel = selectors.getFilterLevel(state)
 
-  return { language }
+  return {
+    language,
+    selectedFilterArea,
+    selectedFilterLevel
+  }
 }
 
 const mapDispatchToProps = {

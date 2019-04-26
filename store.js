@@ -26,7 +26,7 @@ const dumpRawAsyncStorage = () => {
 let store = null
 
 const persistConfig = {
-  key: 'v1',
+  key: 'v2',
   storage,
   debug: true,
   stateReconciler: AutoMergeLevel2

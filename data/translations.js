@@ -5,11 +5,23 @@ export default {
     },
     settings: {
       h1: 'Settings',
-      h2: 'Language:',
+      h2_language: 'Language:',
+      h2_filter: 'Filter:',
       change: 'change',
       changeLanguages: {
         h1: 'Settings',
         h2: 'Change language'
+      },
+      changeFilter: {
+        h1: 'Settings',
+        h2: 'Change filter',
+        areas: {
+          OFF: 'No filter',
+          BRITT_ISL: 'Brittish islands',
+          BRITT_ISL_EXTENDED: 'Brittish islands, extended list',
+          NORDIC: 'Nordic countries',
+          NORDIC_EXTENDED: 'Nordic countries, extended list'
+        }
       }
     },
     species: {
@@ -22,11 +34,23 @@ export default {
     },
     settings: {
       h1: 'Inställningar',
-      h2: 'Språk:',
+      h2_language: 'Språk:',
+      h2_filter: 'Filter:',
       change: 'ändra',
       changeLanguages: {
         h1: 'Inställningar',
         h2: 'Ändra språk'
+      },
+      changeFilter: {
+        h1: 'Settings',
+        h2: 'Filtrera arter:',
+        areas: {
+          OFF: 'Inget filter',
+          BRITT_ISL: 'Brittiska öarnas vanligaste arter',
+          BRITT_ISL_EXTENDED: 'Brittiska öarnas arter, utökad lista',
+          NORDIC: 'Nordens vanligaste arter',
+          NORDIC_EXTENDED: 'Nordens arter, utökad lista'
+        }
       }
     },
     species: {

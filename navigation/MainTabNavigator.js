@@ -5,6 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon'
 import HomeScreen from '../screens/HomeScreen'
 import LanguagesScreen from '../screens/LanguagesScreen'
+import FilterScreen from '../screens/FilterScreen'
 import LinksScreen from '../screens/LinksScreen'
 import SpeciesListScreen from '../screens/SpeciesListScreen'
 import SpecieDetailsScreen from '../screens/SpecieDetailsScreen'
@@ -61,7 +62,8 @@ SpeciesListStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
-  Languages: LanguagesScreen
+  Languages: LanguagesScreen,
+  Filter: FilterScreen
 })
 
 SettingsStack.navigationOptions = {

@@ -50,6 +50,7 @@ const normalizeData = (results) => dispatch => {
   dispatch(Creators.setLanguages(languages))
 
   const structure = {}
+  let abundance = {}
   const families = {}
   const links = {}
   let allImagesFlat = []
@@ -62,6 +63,11 @@ const normalizeData = (results) => dispatch => {
       .find(department => department.department_id === 'structure')
       .groups[0]
     structure[language].order = Array.prototype.concat(...structure[language].order)
+
+    if (structure[language].abundance) {
+      abundance = structure[language].abundance
+    }
+    console.log('abundance', abundance)
 
     const _families = departments
       .find(department => department.department_id === 'families')
@@ -89,6 +95,7 @@ const normalizeData = (results) => dispatch => {
 
   dispatch(Creators.setAllImagesFlat(allImagesFlat))
 
+  dispatch(Creators.setAbundance(abundance))
   dispatch(Creators.setFamilies(families))
   dispatch(Creators.setLinks(links))
   dispatch(Creators.setStructure(structure))
@@ -99,10 +106,12 @@ const normalizeData = (results) => dispatch => {
 const prefetchImages = (images) => dispatch => {
   // console.log('_prefetch images', images)
 
+/*
   images.forEach(({ uri }) => {
     // console.log('_prefetch uri', uri, uri.lastIndexOf())
     Image.prefetch(uri)
   })
+*/
 
   dispatch(Creators.prefetchSuccess())
 }
