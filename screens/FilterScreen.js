@@ -66,8 +66,12 @@ class FilterScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.headerText}>{i18n.t('settings.changeFilter.h1')}</Text>
 
-        <Text
-          style={styles.subHeaderText}>{i18n.t('settings.changeFilter.h2')} {i18n.t(`settings.changeFilter.areas.${selectedFilter}`)}</Text>
+        <Text style={styles.subHeaderText}>
+          {i18n.t('settings.changeFilter.h2')}
+        </Text>
+        <Text style={styles.description}>
+          {i18n.t('settings.changeFilter.description')}
+        </Text>
 
         <View style={styles.block}>
           <Picker
@@ -104,6 +108,14 @@ const styles = StyleSheet.create({
   subHeaderText: {
     fontSize: 16,
     marginLeft: 15,
+    marginTop: 9,
+    marginBottom: 12
+  },
+
+  description: {
+    fontSize: 12,
+    marginLeft: 15,
+    marginRight: 15,
     marginTop: 9,
     marginBottom: 12
   }

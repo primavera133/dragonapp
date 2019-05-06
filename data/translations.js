@@ -5,8 +5,8 @@ export default {
     },
     settings: {
       h1: 'Settings',
-      h2_language: 'Language:',
-      h2_filter: 'Filter:',
+      h2_language: 'Language',
+      h2_filter: 'Filter',
       change: 'change',
       changeLanguages: {
         h1: 'Settings',
@@ -15,6 +15,7 @@ export default {
       changeFilter: {
         h1: 'Settings',
         h2: 'Change filter',
+        description: 'Reduce the list of species to only relevant species of your area. Extended lists add lesser common species.',
         areas: {
           OFF: 'No filter',
           BRITT_ISL: 'Brittish islands',
@@ -44,6 +45,7 @@ export default {
       changeFilter: {
         h1: 'Settings',
         h2: 'Filtrera arter:',
+        description: 'Minska listan av arter till endast de relevanta för ditt område. Utökad lista inkluderar mer sällsynt sedda arter.',
         areas: {
           OFF: 'Inget filter',
           BRITT_ISL: 'Brittiska öarnas vanligaste arter',

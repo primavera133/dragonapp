@@ -27,7 +27,12 @@ class SettingsScreen extends React.PureComponent {
 
         <TouchableOpacity style={styles.block} onPress={() => this.props.navigation.navigate('Languages')}>
           <View style={styles.blockStart}>
-            <Text style={styles.blockHeader} >{i18n.t('settings.h2_language')} { language }</Text>
+            <Text style={styles.blockHeader}>
+              {i18n.t('settings.h2_language')}
+            </Text>
+            <Text style={styles.blockSelected}>
+              {language}
+            </Text>
           </View>
           <View style={styles.blockEnd}>
             <Text
@@ -38,7 +43,14 @@ class SettingsScreen extends React.PureComponent {
 
         <TouchableOpacity style={styles.block} onPress={() => this.props.navigation.navigate('Filter')}>
           <View style={styles.blockStart}>
-            <Text style={styles.blockHeader} >{i18n.t('settings.h2_filter')} {i18n.t(`settings.changeFilter.areas.${selectedFilter}`)}</Text>
+            <Text
+              style={styles.blockHeader}>
+              {i18n.t('settings.h2_filter')}
+            </Text>
+            <Text style={styles.blockSelected}>
+              {i18n.t(`settings.changeFilter.areas.${selectedFilter}`)}
+            </Text>
+
           </View>
           <View style={styles.blockEnd}>
             <Text
@@ -88,6 +100,10 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
 
+  blockSelected: {
+    fontSize: 12
+  },
+
   blockChange: {
     fontSize: 16,
     alignSelf: 'flex-end'
@@ -111,7 +127,6 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen)
