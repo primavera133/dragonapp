@@ -4,6 +4,7 @@ import { Picker, StyleSheet, Text, View } from 'react-native'
 import { Creators } from '../duck/actions'
 import selectors from '../duck/selectors'
 import i18n from 'i18n-js'
+import operations from '../duck/operations'
 
 class FilterScreen extends React.Component {
   constructor (props) {
@@ -23,6 +24,7 @@ class FilterScreen extends React.Component {
     if (isOff) {
       this.props.setFilterArea('OFF')
       this.props.setFilterLevel('OFF')
+      this.props.normalize()
       return
     }
 
@@ -33,6 +35,8 @@ class FilterScreen extends React.Component {
     } else {
       this.props.setFilterLevel('MAIN')
     }
+
+    this.props.normalize()
   }
 
   render () {
@@ -119,7 +123,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setFilterArea: (area) => (Creators.setFilterArea(area)),
-  setFilterLevel: (area) => (Creators.setFilterLevel(area))
+  setFilterLevel: (area) => (Creators.setFilterLevel(area)),
+  normalize: () => operations.reNormalizeData()
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterScreen)

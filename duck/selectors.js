@@ -1,11 +1,9 @@
 // API Data
 const getData = state => state.data
-const getAllImagesFlat = state => getData(state).allImagesFlat
 const getRawData = state => getData(state).raw
 const isFetchingData = state => getData(state).fetchingData
 const isFetchDataFailed = state => getData(state).fetchingDataFailed
-const isPrefetching = state => getData(state).prefetching
-const isLoading = state => isFetchingData(state) || isPrefetching(state)
+const isLoading = state => isFetchingData(state)
 
 // Species
 const getSpeciesData = state => state.species
@@ -24,15 +22,19 @@ const getLanguage = state => getSettings(state).language
 const getLanguages = state => getSettings(state).languages
 const getFilterArea = state => getSettings(state).filterArea
 const getFilterLevel = state => getSettings(state).filterLevel
+const getFilters = state => ({
+  area: getFilterArea(state),
+  level: getFilterLevel(state)
+})
 
 export default {
-  getAllImagesFlat,
   getData,
   getAbundance,
   getLanguage,
   getLanguages,
   getRawData,
   getFamilies,
+  getFilters,
   getLinks,
   getFilterArea,
   getFilterLevel,

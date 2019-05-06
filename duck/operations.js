@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { Creators } from './actions'
-import { Image } from 'react-native'
 import { Asset, Font, Icon } from 'expo'
+import selectors from './selectors'
 
-const startUp = () => dispatch => {
+const startUp = (filters) => dispatch => {
   try {
     Asset.loadAsync([
       require('../assets/images/robot-dev.png'),
@@ -16,9 +16,9 @@ const startUp = () => dispatch => {
       // to remove this if you are not using it in your app
       'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf')
     })
-    dispatch(fetchData())
+    dispatch(fetchData(filters))
   } catch (error) {
-    dispatch(Creators.prefetchFail(error))
+    // dispatch(Creators.fetchDataFail(error))
   }
 }
 
@@ -26,7 +26,7 @@ const startUp = () => dispatch => {
  * Get data
  * @returns {Function}
  */
-const fetchData = () => dispatch => {
+const fetchData = (filters) => dispatch => {
   dispatch(Creators.fetchDataStarted())
 
   axios.get(`https://myrenas.se/api-species/json/v1.json`)
@@ -35,9 +35,7 @@ const fetchData = () => dispatch => {
 
       const results = response.data.results
 
-      dispatch(normalizeData(results))
-
-      // dispatch(Creators.prefetchStart())
+      dispatch(normalizeData(results, filters))
     })
     .catch(error => {
       console.log('error', error)
@@ -45,7 +43,7 @@ const fetchData = () => dispatch => {
     })
 }
 
-const normalizeData = (results) => dispatch => {
+const normalizeData = (results, filters) => dispatch => {
   const languages = results.map(result => result.language_id)
   dispatch(Creators.setLanguages(languages))
 
@@ -53,7 +51,6 @@ const normalizeData = (results) => dispatch => {
   let abundance = {}
   const families = {}
   const links = {}
-  let allImagesFlat = []
 
   languages.forEach(language => {
     const result = results.find(result => result.language_id === language)
@@ -67,7 +64,6 @@ const normalizeData = (results) => dispatch => {
     if (structure[language].abundance) {
       abundance = structure[language].abundance
     }
-    console.log('abundance', abundance)
 
     const _families = departments
       .find(department => department.department_id === 'families')
@@ -76,46 +72,46 @@ const normalizeData = (results) => dispatch => {
 
     families[language] = structure[language].order.map(key => _families.find(family => family.title === key))
 
-    allImagesFlat = allImagesFlat.concat(families[language].map(family => {
-      return family.data.map(specie => {
-        let _images = []
-        if (specie.images && specie.images.thumb) {
-          _images.push(specie.images.thumb)
-        }
-        if (specie.images && specie.images.images) {
-          _images = _images.concat(specie.images.images)
-        }
-        return _images
-      }).reduce((acc, curr) => acc.concat(curr))
-    }).reduce((acc, curr) => acc.concat(curr)))
+    // filter families
+    if (filters.area !== 'OFF') {
+      let abundantSpecies = abundance[filters.area].main
+      if (filters.level === 'EXTENDED') {
+        abundantSpecies = abundantSpecies.concat(abundance[filters.area].extended)
+      }
+
+      let filteredFamilies = families[language].map(family => {
+        family.data = family.data.filter(specie => {
+          return abundantSpecies.includes(specie.scientific_name)
+        })
+        return family
+      })
+
+      filteredFamilies = filteredFamilies.filter(family => {
+        return family.data.length
+      })
+
+
+      families[language] = filteredFamilies
+    }
 
     links[language] = departments.find(department => department.department_id === 'links')
       .groups
   })
 
-  dispatch(Creators.setAllImagesFlat(allImagesFlat))
-
   dispatch(Creators.setAbundance(abundance))
   dispatch(Creators.setFamilies(families))
   dispatch(Creators.setLinks(links))
   dispatch(Creators.setStructure(structure))
-
-  dispatch(prefetchImages(allImagesFlat))
 }
 
-const prefetchImages = (images) => dispatch => {
-  // console.log('_prefetch images', images)
-
-/*
-  images.forEach(({ uri }) => {
-    // console.log('_prefetch uri', uri, uri.lastIndexOf())
-    Image.prefetch(uri)
-  })
-*/
-
-  dispatch(Creators.prefetchSuccess())
+const reNormalizeData = () => (dispatch, getState) => {
+  const state = getState()
+  const results = selectors.getRawData(state).results
+  const filters = selectors.getFilters(state)
+  dispatch(normalizeData(results, filters))
 }
 
 export default {
-  startUp
+  startUp,
+  reNormalizeData
 }

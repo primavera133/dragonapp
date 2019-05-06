@@ -9,7 +9,7 @@ import translations from './data/translations'
 
 class Main extends Component {
   componentWillMount () {
-    this.props.startUp()
+    this.props.startUp(this.props.filters)
 
     i18n.fallbacks = true
     i18n.translations = translations
@@ -50,14 +50,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const language = selectors.getLanguage(state)
   const isLoading = selectors.isLoading(state)
+  const filters = selectors.getFilters(state)
   return {
     isLoading,
-    language
+    language,
+    filters
   }
 }
 
 const mapDispatchToProps = {
-  startUp: () => operations.startUp()
+  startUp: filters => operations.startUp(filters)
 }
 
 export default connect(

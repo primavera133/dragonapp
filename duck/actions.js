@@ -4,9 +4,6 @@ const { Creators, Types } = createActions({
   fetchDataStarted: [],
   fetchDataSuccess: ['value'],
   fetchDataFail: ['error'],
-  prefetchStart: ['value'],
-  prefetchSuccess: [],
-  prefetchFail: ['value'],
   setAbundance: ['value'],
   setFamilies: ['value'],
   setLanguage: ['value'],
@@ -16,7 +13,6 @@ const { Creators, Types } = createActions({
   setFilterLevel: ['value'],
   setSelectedImage: ['value'],
   setSelectedSpecie: ['value'],
-  setAllImagesFlat: ['value'],
   setStructure: ['value']
 })
 
